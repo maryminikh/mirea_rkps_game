@@ -46,6 +46,8 @@ function input() {
   });
 }
 
+//
+
 async function main() {
   print(tab(27) + "DOORS\n");
   print(tab(20) + "CREATIVE COMPUTING\n");
@@ -54,8 +56,8 @@ async function main() {
   print("\n");
   print("\n");
 
-  // DIM K(20) ---- объявление переменной или массива
-  let K = 20;
+  // DIM K(20) ---- объявление переменной или массива 20 элеме
+  let K = [0, 0];
 
   // DEF FNR(Z)=INT(Z*RND(1)) ---- gives a different random number
   function FNR(Z) {
@@ -63,6 +65,8 @@ async function main() {
   }
 
   // todo
+  //
+
   // FOR X=0 TO 6:READ R$(X):NEXT X
   for (let x = 0; x <= 6; x++) {
     // R[X]
@@ -87,9 +91,9 @@ async function main() {
       // 40 PRINT"THERE ARE";N;"LOCKED DOORS AND THERE ARE";K3;"KEYS(0-"K3-1")"
       // 41 PRINT"YOU WILL HAVE ";T-1;"TRIES TO OPEN THEM ALL"
       // 42 PRINT"(SOME KEYS MAY OPEN MORE THAN ONE DOOR)"
-      print(`THERE ARE ${N} LOCKED DOORS AND THERE ARE ${K3} KEYS(0-${K3 - 1})`);
-      print(`YOU WILL HAVE ${T - 1} TRIES TO OPEN THEM ALL`);
-      print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)`);
+      print(`THERE ARE ${N} LOCKED DOORS AND THERE ARE ${K3} KEYS(0-${K3 - 1})\n`);
+      print(`YOU WILL HAVE ${T - 1} TRIES TO OPEN THEM ALL\n`);
+      print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)\n`);
 
       // 65 FOR X=2 TO N:K(X)=FNR(K3):NEXT X
       for (let x = 2; x <= N; x++) {
@@ -104,7 +108,7 @@ async function main() {
       // 90 INPUT K2
       // 100 IF K2<>K(D) THEN 70
       // 110 PRINT S$(FNR(7)):D=D+1
-      print(`TRIES LEFT = ${T}       DOOR # ${D}  KEY`)
+      print(`TRIES LEFT = ${T}       DOOR # ${D}  KEY\n`)
       let K2 = await input();
       if (K2 !== K[D]) {
 // 70 T=T-1:IF T=0 THEN 150
@@ -120,9 +124,9 @@ async function main() {
       // 150 PRINT"YOU LOSE,  THE REST OF THE KEYS ARE:"
       // 160 FOR X=D TO N:PRINT"DOOR";X;"KEY"K(X):NEXT X
 
-      print(`YOU LOSE,  THE REST OF THE KEYS ARE:`);
+      print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
       for (let X = D; N; X++) {
-        print(`DOOR ${X} \n KEY ${K[X]}`);
+        print(`DOOR ${X} \n KEY ${K[X]}\n`);
       }
 
       // 170 PRINT"DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!)"
@@ -131,13 +135,13 @@ async function main() {
       // 181 IF Q$="NO SIR!" THEN 999
       // 190 PRINT"HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!"
       // 200 GOTO 170
-      print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!`)
+      print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!\n`)
       let Q = await input();
       if (Q === "YES SIR!") continue START;
 
       if (Q === "NO SIR!") {
         break START;
-      } else print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!`);
+      } else print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!\n`);
 
 
     } while (0);
