@@ -58,7 +58,7 @@ async function main() {
   let K = 20;
 
   // DEF FNR(Z)=INT(Z*RND(1)) ---- gives a different random number
-  function RAND(Z) {
+  function FNR(Z) {
     return Z * Math.random();
   }
 
@@ -75,64 +75,72 @@ async function main() {
   }
 
 
-  // D=1:T=10+FNR(21):N=3+FNR(3):K3=8+FNR(5)
+  START:
+    do {
+      // 35 D=1:T=10+FNR(21):N=3+FNR(3):K3=8+FNR(5)
+      let D = 1;
+      let T = 10 + FNR(21);
+      let N = 3 + FNR(3);
+      let K3 = 8 + FNR(5);
 
 
-  // PRINT"THERE ARE";N;"LOCKED DOORS AND THERE ARE";K3;"KEYS(0-"K3-1")"
-  // PRINT"YOU WILL HAVE ";T-1;"TRIES TO OPEN THEM ALL"
-  // PRINT"(SOME KEYS MAY OPEN MORE THAN ONE DOOR)"
-  print(`THERE ARE ${N} LOCKED DOORS AND THERE ARE ${K3} KEYS(0-${K3 - 1})`);
-  print(`YOU WILL HAVE ${T - 1} TRIES TO OPEN THEM ALL`);
-  print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)`);
+      // 40 PRINT"THERE ARE";N;"LOCKED DOORS AND THERE ARE";K3;"KEYS(0-"K3-1")"
+      // 41 PRINT"YOU WILL HAVE ";T-1;"TRIES TO OPEN THEM ALL"
+      // 42 PRINT"(SOME KEYS MAY OPEN MORE THAN ONE DOOR)"
+      print(`THERE ARE ${N} LOCKED DOORS AND THERE ARE ${K3} KEYS(0-${K3 - 1})`);
+      print(`YOU WILL HAVE ${T - 1} TRIES TO OPEN THEM ALL`);
+      print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)`);
 
+      // 65 FOR X=2 TO N:K(X)=FNR(K3):NEXT X
+      for (let x = 2; x <= N; x++) {
+        K[x] = FNR(K3);
+      }
 
-  // 65 FOR X=2 TO N:K(X)=FNR(K3):NEXT X
-  // 70 T=T-1:IF T=0 THEN 150
+      // 70 T=T-1:IF T=0 THEN 150
+      T = T - 1;
+      if (T === 0) break START;
 
-
-  // 80 PRINT"TRIES LEFT =";T;"           DOOR #";D;"KEY";
-  // 90 INPUT K2
-  // 100 IF K2<>K(D) THEN 70
-  // 110 PRINT S$(FNR(7)):D=D+1
-  print(`TRIES LEFT = ${T}       DOOR # ${D}  KEY`)
-  let K2 = await input();
-  if (K2 !== K[D]) {
+      // 80 PRINT"TRIES LEFT =";T;"           DOOR #";D;"KEY";
+      // 90 INPUT K2
+      // 100 IF K2<>K(D) THEN 70
+      // 110 PRINT S$(FNR(7)):D=D+1
+      print(`TRIES LEFT = ${T}       DOOR # ${D}  KEY`)
+      let K2 = await input();
+      if (K2 !== K[D]) {
 // 70 T=T-1:IF T=0 THEN 150
-  }
+      }
+
+      // 120 IF D<N+1 THEN 70
+
+      // 125 PRINT
+      // 130 PRINT"YOU DID IT, BEHIND DOOR #";N;"IS..........................."
+      // 140 PRINT R$(FNR(7)) "!!":GOTO 170
 
 
-  // 120 IF D<N+1 THEN 70
+      // 150 PRINT"YOU LOSE,  THE REST OF THE KEYS ARE:"
+      // 160 FOR X=D TO N:PRINT"DOOR";X;"KEY"K(X):NEXT X
 
-  // 125 PRINT
-  // 130 PRINT"YOU DID IT, BEHIND DOOR #";N;"IS..........................."
-  // 140 PRINT R$(FNR(7)) "!!":GOTO 170
+      print(`YOU LOSE,  THE REST OF THE KEYS ARE:`);
+      for (let X = D; N; X++) {
+        print(`DOOR ${X} \n KEY ${K[X]}`);
+      }
+
+      // 170 PRINT"DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!)"
+      // 171 INPUT Q$
+      // 180 IF Q$="YES SIR!" THEN 35
+      // 181 IF Q$="NO SIR!" THEN 999
+      // 190 PRINT"HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!"
+      // 200 GOTO 170
+      print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!`)
+      let Q = await input();
+      if (Q === "YES SIR!") continue START;
+
+      if (Q === "NO SIR!") {
+        break START;
+      } else print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!`);
 
 
-
-  // 150 PRINT"YOU LOSE,  THE REST OF THE KEYS ARE:"
-  // 160 FOR X=D TO N:PRINT"DOOR";X;"KEY"K(X):NEXT X
-  // 170 PRINT"DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!)"
-  // 171 INPUT Q$
-  // 180 IF Q$="YES SIR!" THEN 35
-  // 181 IF Q$="NO SIR!" THEN 999
-  // 190 PRINT"HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!"
-  // 200 GOTO 170
-  print(`YOU LOSE,  THE REST OF THE KEYS ARE:`);
-  for (let X = D; N; X++) {
-    print(`DOOR ${X} \n KEY ${K[X]}`);
-  }
-
-  print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!`)
-  let Q = await input();
-  if (Q === "YES SIR!") {
-    // THEN 35
-  }
-
-  if (Q === "NO SIR!") {
-    throw '';
-  }
-  else print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!`);
-
+    } while (0);
 
 
   // 500 DATA"A POT OF GOLD","A BEAUTIFUL MAIDEN","A MAN EATING TIGER"
@@ -145,42 +153,3 @@ async function main() {
 }
 
 main();
-
-
-// 1 PRINT TAB(27)"DOORS"
-// 2 PRINT TAB(20)"CREATIVE COMPUTING"
-// 3 PRINT TAB(18)"MORRISTOWN, NEW JERSEY"
-// 4 PRINT
-// 5 PRINT
-// 6 PRINT
-// 25 DIM K(20)
-// 30 DEF FNR(Z)=INT(Z*RND(1))
-// 32 FOR X=0 TO 6:READ R$(X):NEXT X
-// 33 FOR X=0 TO 6: READ S$(X):NEXT X
-// 35 D=1:T=10+FNR(21):N=3+FNR(3):K3=8+FNR(5)
-// 40 PRINT"THERE ARE";N;"LOCKED DOORS AND THERE ARE";K3;"KEYS(0-"K3-1")"
-// 41 PRINT"YOU WILL HAVE ";T-1;"TRIES TO OPEN THEM ALL"
-// 42 PRINT"(SOME KEYS MAY OPEN MORE THAN ONE DOOR)"
-// 65 FOR X=2 TO N:K(X)=FNR(K3):NEXT X
-// 70 T=T-1:IF T=0 THEN 150
-// 80 PRINT"TRIES LEFT =";T;"           DOOR #";D;"KEY";
-// 90 INPUT K2
-// 100 IF K2<>K(D) THEN 70
-// 110 PRINT S$(FNR(7)):D=D+1
-// 120 IF D<N+1 THEN 70
-// 125 PRINT
-// 130 PRINT"YOU DID IT, BEHIND DOOR #";N;"IS..........................."
-// 140 PRINT R$(FNR(7)) "!!":GOTO 170
-// 150 PRINT"YOU LOSE,  THE REST OF THE KEYS ARE:"
-// 160 FOR X=D TO N:PRINT"DOOR";X;"KEY"K(X):NEXT X
-// 170 PRINT"DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!)"
-// 171 INPUT Q$
-// 180 IF Q$="YES SIR!" THEN 35
-// 181 IF Q$="NO SIR!" THEN 999
-// 190 PRINT"HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!"
-// 200 GOTO 170
-// 500 DATA"A POT OF GOLD","A BEAUTIFUL MAIDEN","A MAN EATING TIGER"
-// 505 DATA"NOTHING","$22.59","A ROLLS ROYCE","THE KEYS TO THE WORLD"
-// 600 DATA"OPEN SESAME!","C-R-E-E-E-E-E-A-A-K!","WA LAH!","TA-DAH!"
-// 605 DATA"ABRACADABRA!", "CLICK !!!!!!!!?!???????!!!!!!!!", "SURPRISE!"
-// 999 END
