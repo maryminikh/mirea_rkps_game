@@ -70,7 +70,7 @@ const data_sound = [
   "SURPRISE!"
 ]
 
-let K_array_of_doors = new Array(20);
+let K_array_of_keys = new Array(20);
 
 let D_current_door = 1;
 
@@ -91,47 +91,55 @@ async function main() {
     print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)\n\n`);
 
 
-    // 65 FOR X=2 TO N:
-    // K(X)=FNR(K3):
-    // NEXT X
-    //todo заполнение массива дверей
+    //todo заполнение массива
     for (let x = 2; x <= N_locked_doors; x++) {
-      K_array_of_doors.fill(FNR(K3_keys));
+      K_array_of_keys.fill(FNR(K3_keys));
     }
 
     Tries();
+    await CurrentTry();
 
 
-    print(`TRIES LEFT = ${T_tries}       DOOR #${D_current_door}  KEY`)
-    let K2_chosen_door = await input();
+    // // todo иначе поражение
+    // loose();
 
-    if (K2_chosen_door !== K_array_of_doors[D_current_door]) {
-      Tries();
-      print(`${data_sound[FNR(7)]} \n`);
-      D_current_door = D_current_door + 1;
-    }
 
-    if (D_current_door < N_locked_doors + 1) {
-      Tries();
-    }
-
-    await Victory();
-    loose();
   }
 
   function Tries() {
     T_tries = T_tries - 1;
   }
 
-  if (T_tries === 0) {
-    loose();
+  async function CurrentTry() {
+    print(`TRIES LEFT = ${T_tries}       DOOR #${D_current_door}  KEY`)
+    let K2_chosen_door = await input();
+
+    // todo правильный ключ от текущей двери
+    if (K2_chosen_door !== K_array_of_keys[D_current_door]) {
+      Tries();
+
+      print(`${data_sound[FNR(7)]} \n`);
+      D_current_door = D_current_door + 1;
+    }
+
+    // todo все двери открыты
+    else if (D_current_door < N_locked_doors + 1) {
+      Tries();
+      await Victory();
+    }
+
+    else if (T_tries === 0) {
+      loose();
+    }
+
+    CurrentTry();
   }
 
   function loose() {
     print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
 
     for (let X = D_current_door; X <= N_locked_doors; X++) {
-      print(`DOOR ${X} \n KEY ${K_array_of_doors[X]}  \n`);
+      print(`DOOR ${X} \n KEY ${K_array_of_keys[X]}  \n`);
     }
   }
 
@@ -139,12 +147,8 @@ async function main() {
     print("\n");
     print(`YOU DID IT, BEHIND DOOR #${N_locked_doors} IS...........................\n`);
     print(`${data_content[FNR(7)]} !!\n`);
+
     await Question();
-  }
-
-  async function RightKey() {
-    Tries();
-
   }
 
   async function Question() {
@@ -160,7 +164,6 @@ async function main() {
       await Question();
     }
   }
-
 
   print(tab(27) + "DOORS\n");
   print(tab(20) + "CREATIVE COMPUTING\n");
@@ -179,13 +182,6 @@ async function main() {
   for (let x = 0; x <= 6; x++) {
     // S[X]
   }
-
-
-  // 110 PRINT S$(FNR(7)):
-  //
-  // D=D+1
-  // 120 IF D<N+1 THEN 70
-
 
 }
 
