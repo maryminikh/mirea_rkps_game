@@ -8,24 +8,33 @@
 30 DEF FNR(Z)=INT(Z*RND(1))
 32 FOR X=0 TO 6:READ R$(X):NEXT X
 33 FOR X=0 TO 6: READ S$(X):NEXT X
+
+переменные
 35 D=1:T=10+FNR(21):
 N=3+FNR(3):
 K3=8+FNR(5)
 
+условие
 40 PRINT"THERE ARE";N;"LOCKED DOORS AND THERE ARE";K3;"KEYS(0-"K3-1")"
 41 PRINT"YOU WILL HAVE ";T-1;"TRIES TO OPEN THEM ALL"
 42 PRINT"(SOME KEYS MAY OPEN MORE THAN ONE DOOR)"
 
+заполнение массива правильными ключами
 65 FOR X=2 TO N:
 K(X)=FNR(K3):
 NEXT X
 
+попытки
 70 T=T-1:
-IF T=0 THEN 150
+IF T=0 THEN 150 тогда поражение
 
+текущая попытка
 80 PRINT"TRIES LEFT =";T;"           DOOR #";D;"KEY";
 90 INPUT K2
+
+если неправильный ключ
 100 IF K2<>K(D) THEN 70
+
 110 PRINT S$(FNR(7)):
 D=D+1
 
@@ -35,6 +44,7 @@ D=D+1
 140 PRINT R$(FNR(7)) "!!":GOTO 170
 
 
+поражение и вывод оставшихся правильных ключей
 150 PRINT"YOU LOSE,  THE REST OF THE KEYS ARE:"
 160 FOR X=D TO N:
 PRINT"DOOR";X;"KEY"K(X):
