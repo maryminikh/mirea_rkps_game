@@ -27,7 +27,7 @@ function input() {
   return new Promise(function (resolve) {
     input_element = document.createElement("INPUT");
 
-    print("Insert: ");
+    print("? ");
     input_element.setAttribute("type", "text");
     input_element.setAttribute("length", "50");
     document.getElementById("output").appendChild(input_element);
@@ -50,14 +50,17 @@ function FNR(Z) {
   return Math.floor(Z * Math.random());
 }
 
-const data = [
+const data_content = [
   "A POT OF GOLD",
   "A BEAUTIFUL MAIDEN",
   "A MAN EATING TIGER",
   "NOTHING",
   "$22.59",
   "A ROLLS ROYCE",
-  "THE KEYS TO THE WORLD",
+  "THE KEYS TO THE WORLD"
+]
+
+const data_sound = [
   "OPEN SESAME!",
   "C-R-E-E-E-E-E-A-A-K!",
   "WA LAH!",
@@ -67,11 +70,98 @@ const data = [
   "SURPRISE!"
 ]
 
-// 25 DIM K(20) ----- массив
-let K = [0, 0];
+let K_array_of_doors = new Array(20);
+
+let D_current_door = 1;
+
+//адекватное кол-во попыток
+// let T_tries = 10 + FNR(21);
+// кол-во, чтобы точно выиграть
+let T_tries = 10000000000;
+
+let N_locked_doors = 3 + FNR(3);
+let K3_keys = 8 + FNR(5);
 
 
 async function main() {
+  async function start() {
+    print("\n");
+    print(`THERE ARE ${N_locked_doors} LOCKED DOORS AND THERE ARE ${K3_keys} KEYS (0-${K3_keys - 1})\n`);
+    print(`YOU WILL HAVE ${T_tries - 1} TRIES TO OPEN THEM ALL\n`);
+    print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)\n\n`);
+
+
+    // 65 FOR X=2 TO N:
+    // K(X)=FNR(K3):
+    // NEXT X
+    //todo заполнение массива дверей
+    for (let x = 2; x <= N_locked_doors; x++) {
+      K_array_of_doors.fill(FNR(K3_keys));
+    }
+
+    Tries();
+
+
+    print(`TRIES LEFT = ${T_tries}       DOOR #${D_current_door}  KEY`)
+    let K2_chosen_door = await input();
+
+    if (K2_chosen_door !== K_array_of_doors[D_current_door]) {
+      Tries();
+      print(`${data_sound[FNR(7)]} \n`);
+      D_current_door = D_current_door + 1;
+    }
+
+    if (D_current_door < N_locked_doors + 1) {
+      Tries();
+    }
+
+    await Victory();
+    loose();
+  }
+
+  function Tries() {
+    T_tries = T_tries - 1;
+  }
+
+  if (T_tries === 0) {
+    loose();
+  }
+
+  function loose() {
+    print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
+
+    for (let X = D_current_door; X <= N_locked_doors; X++) {
+      print(`DOOR ${X} \n KEY ${K_array_of_doors[X]}  \n`);
+    }
+  }
+
+  async function Victory() {
+    print("\n");
+    print(`YOU DID IT, BEHIND DOOR #${N_locked_doors} IS...........................\n`);
+    print(`${data_content[FNR(7)]} !!\n`);
+    await Question();
+  }
+
+  async function RightKey() {
+    Tries();
+
+  }
+
+  async function Question() {
+    print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!\n`)
+    let Q = await input();
+    if (Q === "YES SIR!") {
+      await start();
+    }
+    if (Q === "NO SIR!") {
+      return 0;
+    } else {
+      print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!\n`);
+      await Question();
+    }
+  }
+
+
   print(tab(27) + "DOORS\n");
   print(tab(20) + "CREATIVE COMPUTING\n");
   print(tab(18) + "MORRISTOWN, NEW JERSEY\n");
@@ -79,114 +169,22 @@ async function main() {
   print("\n");
   print("\n");
 
+  await start();
 
   // FOR X=0 TO 6:READ R$(X):NEXT X
   for (let x = 0; x <= 6; x++) {
     // R[X]
   }
-
   // FOR X=0 TO 6: READ S$(X):NEXT X
   for (let x = 0; x <= 6; x++) {
     // S[X]
-
   }
 
 
-  START:
-    do {
-      function Tries() {
-        tries = tries - 1;
-      }
-      if (tries === 0) break;
-
-      async function Question() {
-        // 170 PRINT"DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!)"
-        // 171 INPUT Q$
-        // 180 IF Q$="YES SIR!" THEN 35
-        // 181 IF Q$="NO SIR!" THEN 999
-        // 190 PRINT"HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!"
-        // 200 GOTO 170
-
-        print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!\n`)
-        let Q = await input();
-        if (Q === "YES SIR!") continue START;
-        if (Q === "NO SIR!") {
-          break;
-        } else {
-          print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!\n`);
-          await Question();
-        }
-      }
-
-
-
-
-
-
-      // 35 D=1:T=10+FNR(21):N=3+FNR(3):K3=8+FNR(5)
-      let doors = 1;
-      let tries = 10 + FNR(21);
-      let locked_doors = 3 + FNR(3);
-      let keys = 8 + FNR(5);
-
-
-      // 40 PRINT"THERE ARE";N;"LOCKED DOORS AND THERE ARE";K3;"KEYS(0-"K3-1")"
-      // 41 PRINT"YOU WILL HAVE ";T-1;"TRIES TO OPEN THEM ALL"
-      // 42 PRINT"(SOME KEYS MAY OPEN MORE THAN ONE DOOR)"
-      print(`THERE ARE ${locked_doors} LOCKED DOORS AND THERE ARE ${keys} KEYS (0-${keys - 1})\n`);
-      print(`YOU WILL HAVE ${tries - 1} TRIES TO OPEN THEM ALL\n`);
-      print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)\n\n`);
-
-      // 65 FOR X=2 TO N:
-      // K(X)=FNR(K3):
-      // NEXT X
-
-      for (let x = 2; x <= locked_doors; x++) {
-        K[x] = FNR(keys);
-      }
-
-
-      // 70 T=T-1:
-      // IF T=0 THEN 150
-
-
-
-      // 80 PRINT"TRIES LEFT =";T;"           DOOR #";D;"KEY";
-      // 90 INPUT K2
-      // 100 IF K2<>K(D) THEN 70
-      // 110 PRINT S$(FNR(7)):D=D+1
-      print(`TRIES LEFT = ${tries}       DOOR #${doors}  KEY\n`)
-      let K2 = await input();
-      if (K2 !== K[doors]) {
-        Tries();
-      }
-
-      // 120 IF D<N+1 THEN 70
-
-      // 125 PRINT
-      // 130 PRINT"YOU DID IT, BEHIND DOOR #";N;"IS..........................."
-      // 140 PRINT R$(FNR(7)) "!!":GOTO 170
-
-
-      // 150 PRINT"YOU LOSE,  THE REST OF THE KEYS ARE:"
-      // 160 FOR X=D TO N:PRINT"DOOR";X;"KEY"K(X):NEXT X
-
-
-
-      print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
-      for (let X = doors; locked_doors; X++) {
-        print(`DOOR ${X} \n KEY ${K[X]}\n`);
-      }
-
-
-    } while ();
-
-
-  // 500 DATA"A POT OF GOLD","A BEAUTIFUL MAIDEN","A MAN EATING TIGER"
-  // 505 DATA"NOTHING","$22.59","A ROLLS ROYCE","THE KEYS TO THE WORLD"
-  // 600 DATA"OPEN SESAME!","C-R-E-E-E-E-E-A-A-K!","WA LAH!","TA-DAH!"
-  // 605 DATA"ABRACADABRA!", "CLICK !!!!!!!!?!???????!!!!!!!!", "SURPRISE!"
-  // 999 END
+  // 110 PRINT S$(FNR(7)):
+  //
+  // D=D+1
+  // 120 IF D<N+1 THEN 70
 
 
 }
