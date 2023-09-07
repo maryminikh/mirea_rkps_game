@@ -1,13 +1,5 @@
 "use strict";
 
-// DEF ----defines a function with exactly one single numeric argument which can be executed with FN afterwards
-
-// FN is used in the following two constructions:
-//
-// as part of a DEF FN definition like DEF FN <function name>(<variable>)=<expression_using_placehholder_variable>
-// calling the previously defined function like FN <function name>(<numeric expression>), described as follows ...
-
-// R$ ---- строковая переменная?
 
 function tab(space) {
   let str = "";
@@ -34,7 +26,7 @@ function input() {
     input_element.focus();
     input_str = undefined;
     input_element.addEventListener("keydown", function (event) {
-      if (event.keyCode === 13) {
+      if (event.keyCode === 13) { //13 is Enter
         input_str = input_element.value;
         document.getElementById("output").removeChild(input_element);
         print(input_str);
@@ -45,7 +37,7 @@ function input() {
   });
 }
 
-// todo Z - кол-во рандомных значений?
+// todo Z - кол-во рандомных значений
 function FNR(Z) {
   return Math.floor(Z * Math.random());
 }
