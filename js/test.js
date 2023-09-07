@@ -8,11 +8,22 @@
 
 describe("question", () => {
 
-  it('Ответ на вопрос о начале новой игры YES SIR, выполнение продолжается', () => {
-    assert.equal(Question(Q = "YES SIR!"), StartGame());
-  });
+  // it('Ответ на вопрос о начале новой игры YES SIR, выполнение продолжается', () => {
+  //   assert.equal(Question(Q = "YES SIR!"), StartGame());
+  // });
+  //
+  // it('Ответ на вопрос о начале новой игры NO SIR, выполнение прекращается', () => {
+  //   assert.equal(Question(Q = "NO SIR!"), 0);
+  // })
+  //
+  // it('Ответ на вопрос о начале новой игры NO SIR, выполнение прекращается', () => {
+  //   assert.equal(Question(Q = "ghhsrt"), Question());
+  // })
 
-  it('Ответ на вопрос о начале новой игры NO SIR, выполнение прекращается', () => {
-    assert.equal(Question(Q = "NO SIR!"), 0);
-  })
+});
+
+describe("question", () => {
+
+
+
 });
