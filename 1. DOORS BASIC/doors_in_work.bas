@@ -32,9 +32,8 @@ IF T=0 THEN 150 тогда поражение
 80 PRINT"TRIES LEFT =";T;"           DOOR #";D;"KEY";
 90 INPUT K2
 
-если неправильный ключ
+если правильный ключ
 100 IF K2<>K(D) THEN 70
-
 110 PRINT S$(FNR(7)):
 D=D+1
 

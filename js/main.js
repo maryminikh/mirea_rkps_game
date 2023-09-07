@@ -72,83 +72,92 @@ const data_sound = [
 
 // todo нужно ли значение 20, если при заполнении через push добавляются новые
 // let K_array_of_right_keys = new Array(20);
-let K_array_of_right_keys = new Array(0);
+let K_array_of_right_keys = new Array(20);
 
-let D_current_door = 1;
 
 //адекватное кол-во попыток
 // let T_tries = 10 + FNR(21);
 
 // читкод
-let T_tries = 10000000000;
+// let T_tries = 10000000000;
 
-let N_locked_doors = 3 + FNR(3);
-let K3_keys = 8 + FNR(5);
+
 
 
 async function main() {
+  print(tab(27) + "DOORS\n");
+  print(tab(20) + "CREATIVE COMPUTING\n");
+  print(tab(18) + "MORRISTOWN, NEW JERSEY\n");
+  print("\n");
+  print("\n");
+  print("\n");
+
+  await start();
+
   async function start() {
+    let N_locked_doors = 3 + FNR(3);
+    let K3_keys = 8 + FNR(5);
+    let T_tries = 10 + FNR(21);
+    let D_current_door = 1;
+
     print("\n");
     print(`THERE ARE ${N_locked_doors} LOCKED DOORS AND THERE ARE ${K3_keys} KEYS (0-${K3_keys - 1})\n`);
     print(`YOU WILL HAVE ${T_tries - 1} TRIES TO OPEN THEM ALL\n`);
     print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)\n\n`);
 
     //todo заполнение массива
-    for (let x = 2; x <= N_locked_doors; x++) {
+    for (let x = 1; x <= N_locked_doors; x++) {
       // K_array_of_right_keys.fill(FNR(K3_keys));
-      K_array_of_right_keys.push(FNR(K3_keys));
-      console.log(K_array_of_right_keys);
+      // K_array_of_right_keys.push(FNR(K3_keys));
+      K_array_of_right_keys[x] = FNR(K3_keys);
+
+      console.log('array', K_array_of_right_keys)
     }
 
-    Tries();
-    await CurrentTry();
 
-  }
 
-  function Tries() {
-    T_tries = T_tries - 1;
-  }
+    // T_tries--;
 
-  async function CurrentTry() {
-    print(`TRIES LEFT = ${T_tries}       DOOR #${D_current_door}  KEY`)
-    let K2_chosen_door = await input();
+    // текущая попытка
+    while (T_tries > 0) {
+      print(`TRIES LEFT = ${T_tries}       DOOR #${D_current_door}  KEY`)
+      const K2_chosen_key = await input();
 
-    // правильный ключ от текущей двери
+      if (K2_chosen_key != K_array_of_right_keys[D_current_door]) {
+        T_tries--;
+        if (T_tries == 0) {
+          console.log('out of tries')
 
-    // через do while пока ключ не будет правильный?
-    if (K2_chosen_door === K_array_of_right_keys[D_current_door]) {
-      Tries();
+          break;
+        }
+        console.log('wrong key:', K2_chosen_key, 'right:', K_array_of_right_keys[D_current_door])
+
+        continue;
+      }
 
       print(`${data_sound[FNR(7)]} \n`);
-      D_current_door = D_current_door + 1;
-      await CurrentTry();
-    }
-    // все двери открыты
-    else if (D_current_door < N_locked_doors + 1) {
-      Tries();
-      await Victory();
-    }
-    else if (T_tries === 0) {
-      loose();
-    }
-    else await CurrentTry();
+      D_current_door++;
 
-  }
-
-  function loose() {
-    print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
-
-    for (let X = D_current_door; X <= N_locked_doors; X++) {
-      print(`DOOR ${X} \n KEY ${K_array_of_right_keys[X]}  \n`);
+      if (D_current_door > N_locked_doors) {
+        break;
+      }
     }
-  }
 
-  async function Victory() {
     print("\n");
-    print(`YOU DID IT, BEHIND DOOR #${N_locked_doors} IS...........................\n`);
-    print(`${data_content[FNR(7)]} !!\n`);
+    if (D_current_door === N_locked_doors + 1) {
+      print(`YOU DID IT, BEHIND DOOR #${N_locked_doors} IS...........................\n`);
+      print(`${data_content[FNR(7)]} !!\n`);
 
-    await Question();
+      await Question();
+
+    } else {
+      print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
+      for (let X = D_current_door; X <= N_locked_doors; X++) {
+        print(`DOOR ${X} \n KEY ${K_array_of_right_keys[X]}  \n`);
+      }
+
+      await Question();
+    }
   }
 
   async function Question() {
@@ -164,25 +173,6 @@ async function main() {
       await Question();
     }
   }
-
-  print(tab(27) + "DOORS\n");
-  print(tab(20) + "CREATIVE COMPUTING\n");
-  print(tab(18) + "MORRISTOWN, NEW JERSEY\n");
-  print("\n");
-  print("\n");
-  print("\n");
-
-  await start();
-
-  // FOR X=0 TO 6:READ R$(X):NEXT X
-  for (let x = 0; x <= 6; x++) {
-    // R[X]
-  }
-  // FOR X=0 TO 6: READ S$(X):NEXT X
-  for (let x = 0; x <= 6; x++) {
-    // S[X]
-  }
-
 }
 
 main();
