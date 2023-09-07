@@ -70,19 +70,13 @@ const data_sound = [
   "SURPRISE!"
 ]
 
-// todo нужно ли значение 20, если при заполнении через push добавляются новые
-// let K_array_of_right_keys = new Array(20);
-let K_array_of_right_keys = new Array(20);
-
-
 //адекватное кол-во попыток
 // let T_tries = 10 + FNR(21);
 
 // читкод
 // let T_tries = 10000000000;
 
-
-
+let K_array_of_right_keys = new Array(20);
 
 async function main() {
   print(tab(27) + "DOORS\n");
@@ -114,9 +108,7 @@ async function main() {
       console.log('array', K_array_of_right_keys)
     }
 
-
-
-    // T_tries--;
+    T_tries--;
 
     // текущая попытка
     while (T_tries > 0) {
@@ -153,7 +145,7 @@ async function main() {
     } else {
       print(`YOU LOSE,  THE REST OF THE KEYS ARE:\n`);
       for (let X = D_current_door; X <= N_locked_doors; X++) {
-        print(`DOOR ${X} \n KEY ${K_array_of_right_keys[X]}  \n`);
+        print(`\nDOOR ${X} \n KEY ${K_array_of_right_keys[X]}  \n`);
       }
 
       await Question();
@@ -161,7 +153,7 @@ async function main() {
   }
 
   async function Question() {
-    print(`DO YOU WANT TO PLAY AGAIN(YES SIR! OR NO SIR!\n`)
+    print(`\nDO YOU WANT TO PLAY AGAIN (YES SIR! OR NO SIR!\n`)
     let Q = await input();
     if (Q === "YES SIR!") {
       await start();
@@ -169,7 +161,7 @@ async function main() {
     if (Q === "NO SIR!") {
       return 0;
     } else {
-      print(`HEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!\n`);
+      print(`\nHEY, I DIDN'T JUST FALL OFF A TURNIP TRUCK, YA KNOW!!!!!\n`);
       await Question();
     }
   }
