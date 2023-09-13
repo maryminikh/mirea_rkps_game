@@ -2,6 +2,7 @@
 
 // todo подключение ThreeJS
 var THREE = require('three');
+var css = require("./css/main.css");
 
 function tab(space) {
   let str = "";

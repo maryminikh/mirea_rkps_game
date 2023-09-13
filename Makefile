@@ -11,11 +11,8 @@
 build:
 	webpack --mode production
 
-#NODE_ENV=production gulp build
 
 # для виндоус в exe, для линукс какой удобно
-
-#npm run build main.js
 
 
 #start:
