@@ -7,13 +7,17 @@
  # Цель по умолчанию
  all: build
 
- # Сборка проекта
+ # Сборка проекта через webpack
 build:
-	npm run build
-#  $(NODE) build.js
+	webpack --mode production
 
-start:
-	npm start
+# для виндоус в exe, для линукс какой удобно
+
+#npm run build main.js
+
+
+#start:
+#	npm start
 
 
 #node_modules:

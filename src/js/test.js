@@ -9,6 +9,13 @@
 // stdin sdtout сравнивать что получается в двух программах https://blog.logrocket.com/using-stdout-stdin-stderr-node-js/
 // сделать два процесса https://www.digitalocean.com/community/tutorials/how-to-launch-child-processes-in-node-js
 
+const readline = require("readline")
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
+
 
 const fs = require("fs")
 
@@ -38,3 +45,15 @@ node('ls -lh', (error, stdout, stderr) => {
 
   console.log(`stdout:\n${stdout}`);
 });
+
+
+// для basic
+
+// python
+// через git bash
+EXE = "С:\\ProgramFiles\\Vintage BASIC\\bin\\vintbas.exe"
+ARG = "game.bas"
+
+
+
+

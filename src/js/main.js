@@ -1,5 +1,6 @@
 "use strict";
 
+var THREE = require('three');
 
 function tab(space) {
   let str = "";
