@@ -81,10 +81,8 @@ const StartGame = async () => {
   print(`YOU WILL HAVE ${T_tries - 1} TRIES TO OPEN THEM ALL\n`);
   print(`(SOME KEYS MAY OPEN MORE THAN ONE DOOR)\n\n`);
 
-  //todo заполнение массива
+  //заполнение массива
   for (let x = 1; x <= N_locked_doors; x++) {
-    // K_array_of_right_keys.fill(FNR(K3_keys));
-    // K_array_of_right_keys.push(FNR(K3_keys));
     K_array_of_right_keys[x] = FNR(K3_keys);
 
     console.log('array', K_array_of_right_keys)

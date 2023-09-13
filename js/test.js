@@ -6,24 +6,35 @@
 // Задача состоит в том, чтобы удостовериться, что портированная игра ведет себя в точности как оригинал.
 
 
-describe("question", () => {
+// stdin sdtout сравнивать что получается в двух программах https://blog.logrocket.com/using-stdout-stdin-stderr-node-js/
+// сделать два процесса https://www.digitalocean.com/community/tutorials/how-to-launch-child-processes-in-node-js
 
-  // it('Ответ на вопрос о начале новой игры YES SIR, выполнение продолжается', () => {
-  //   assert.equal(Question(Q = "YES SIR!"), StartGame());
-  // });
-  //
-  // it('Ответ на вопрос о начале новой игры NO SIR, выполнение прекращается', () => {
-  //   assert.equal(Question(Q = "NO SIR!"), 0);
-  // })
-  //
-  // it('Ответ на вопрос о начале новой игры NO SIR, выполнение прекращается', () => {
-  //   assert.equal(Question(Q = "ghhsrt"), Question());
-  // })
 
-});
+const fs = require("fs")
 
-describe("question", () => {
+fs.open("./logs.txt", "w", (err, fd) => {
+  if (err) throw Error(err.message)
+  process.stdin.on("data", data => {
+    fs.write(fd, data.toString() + "\n", (err) => {
+      if (err) throw Error(err.message)
+    })
+  })
+})
 
 
 
+
+const { exec } = require('child_process');
+node('ls -lh', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`error: ${error.message}`);
+    return;
+  }
+
+  if (stderr) {
+    console.error(`stderr: ${stderr}`);
+    return;
+  }
+
+  console.log(`stdout:\n${stdout}`);
 });
