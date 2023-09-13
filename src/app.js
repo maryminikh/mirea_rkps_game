@@ -1,5 +1,6 @@
 "use strict";
 
+// todo подключение ThreeJS
 var THREE = require('three');
 
 function tab(space) {

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Maria Minikh",
   "scripts": {
-    "build": "npm build index.html",
+    "build": "npm build src/html/index.html",
     "test": ""
   },
   "devDependencies": {
