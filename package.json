@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "author": "Maria Minikh",
   "scripts": {
-    "build": "npm build index.html",
-    "test": ""
+    "start": "electron ."
   },
   "devDependencies": {
     "css-loader": "^6.8.1",
+    "electron": "^26.2.1",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
     "style-loader": "^3.3.3",
