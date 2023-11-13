@@ -20,33 +20,43 @@ function print(str) {
     }
 }
 
-const consoleInput = async () => {
-
-    return new Promise(function (resolve) {
-        const readline = require("readline");
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-
-        rl.question('>>', function (name) {
-            console.log(`input ok`);
-            resolve(name);
-            // rl.close();
-        });
-    })
-
-}
+// const consoleInput = async () => {
+//
+//     return new Promise(function (resolve) {
+//         const readline = require("readline");
+//         const rl = readline.createInterface({
+//             input: process.stdin,
+//             // output: process.stdout
+//         });
+//
+//         rl.question('>>', function (name) {
+//             resolve(name);
+//             // rl.close();
+//         });
+//     })
+//
+// }
 
 async function input() {
     let input_element;
     let input_str;
 
     if (typeof window === 'undefined') {
-        console.log("cons")
-        return await consoleInput(input_str);
+        return new Promise(function (resolve) {
+            const readline = require("readline");
+            const rl = readline.createInterface({
+                input: process.stdin,
+                // введенные символы дублируются ?
+                // output: process.stdout
+            });
+
+            rl.question('>>', function (name) {
+                resolve(name);
+                // rl.close();
+            });
+        })
     } else {
-        return await new Promise(function (resolve) {
+        return new Promise(function (resolve) {
             input_element = document.createElement("INPUT");
 
             print("? ");
@@ -100,13 +110,20 @@ const data_sound = [
 // читкод
 // let T_tries = 10000000000;
 
-let K_array_of_right_keys = new Array(20);
-let D_current_door = 1;
+// let K_array_of_right_keys = new Array(20);
+
 
 const StartGame = async () => {
-    let N_locked_doors = 3 + FNR(3);
-    let K3_keys = 8 + FNR(5);
-    let T_tries = 10 + FNR(21);
+    let D_current_door = 1;
+
+    let K_array_of_right_keys = new Array(20);
+    let N_locked_doors = 0;
+    let K3_keys = 0;
+    let T_tries = 0;
+
+    N_locked_doors = 3 + FNR(3);
+    K3_keys = 8 + FNR(8);
+    T_tries = 10 + FNR(21);
 
     print("\n");
     print(`THERE ARE ${N_locked_doors} LOCKED DOORS AND THERE ARE ${K3_keys} KEYS (0-${K3_keys - 1})\n`);
@@ -117,6 +134,9 @@ const StartGame = async () => {
     for (let x = 1; x <= N_locked_doors; x++) {
         K_array_of_right_keys[x] = FNR(K3_keys);
 
+        console.log("K3_keys", K3_keys, )
+
+        //чит
         console.log('array', K_array_of_right_keys)
     }
 
@@ -134,7 +154,10 @@ const StartGame = async () => {
 
                 break;
             }
+            // чит
             console.log('wrong key:', K2_chosen_key, 'right:', K_array_of_right_keys[D_current_door])
+            console.log('array', K_array_of_right_keys)
+
 
             continue;
         }
@@ -170,6 +193,7 @@ async function Question() {
     let Q = await input();
 
     if (Q === "YES SIR!") {
+
         await StartGame();
     }
     if (Q === "NO SIR!") {
@@ -192,5 +216,5 @@ async function main() {
     await StartGame();
 }
 
-console.log('test')
+// console.log('test')
 main();
